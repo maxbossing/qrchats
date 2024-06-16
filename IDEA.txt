@@ -1,0 +1,11 @@
+- Simple single page deployed with randomized key encoded in qr code 
+- Central Server that exposes API to poll messages by key
+- We put QR Codes everywhere
+- Website to see all chats and keys, also to create new qr Codes
+
+
+url: https://chat.exobyte.dev/98874343
+number is the chat room
+everyone connects to that chat and gets sent the messages
+nothing gets saved, nobody knows if somebody is there
+
