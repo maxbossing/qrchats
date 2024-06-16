@@ -15,6 +15,8 @@ wss.on('connection', (ws, request) => {
     const pathname = url.parse(request.url).pathname;
     const chatroomId = pathname.split('/').pop();
 
+    console.log(`New connection to chatroom: ${chatroomId}`);
+
     if (!chatrooms[chatroomId]) {
         chatrooms[chatroomId] = new Set();
     }
@@ -22,6 +24,7 @@ wss.on('connection', (ws, request) => {
 
     ws.on('message', (message) => {
         const messageData = JSON.parse(message);
+        console.log(`Message received in chatroom ${chatroomId}:`, messageData);
         chatrooms[chatroomId].forEach((client) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(messageData));
@@ -30,10 +33,15 @@ wss.on('connection', (ws, request) => {
     });
 
     ws.on('close', () => {
+        console.log(`Connection closed in chatroom: ${chatroomId}`);
         chatrooms[chatroomId].delete(ws);
         if (chatrooms[chatroomId].size === 0) {
             delete chatrooms[chatroomId];
         }
+    });
+
+    ws.on('error', (error) => {
+        console.error(`WebSocket error in chatroom ${chatroomId}:`, error);
     });
 });
 
