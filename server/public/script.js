@@ -13,7 +13,7 @@ const messageInput = document.querySelector('.message-input');
 
 const username = generateRandomUsername();
 const chatroomId = window.location.pathname.split('/').pop();
-const ws = new WebSocket(`ws://${window.location.hostname}:${window.location.port}/ws/${chatroomId}`);
+const ws = new WebSocket(`ws://localhost:${window.location.port}/ws/${chatroomId}`);
 
 ws.onopen = () => {
     console.log('Connected to the server as', username);
